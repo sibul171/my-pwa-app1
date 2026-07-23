@@ -1,11 +1,18 @@
-<link rel="manifest" href="./manifest.json">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>My PWA App</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+</head>
+<body>
+  <h1>自分専用PWAアプリ</h1>
+  <p>これはあなた専用のアプリです。</p>
+</body>
 <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').then(registration => {
-        console.log('ServiceWorker registration successful.');
-      }).catch(err => {
-        console.log('ServiceWorker registration failed.');
-      });
-    }
-  </script>
-  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
+</html>
