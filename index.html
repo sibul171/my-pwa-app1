@@ -2,17 +2,52 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>My PWA App</title>
+  <title>My Memo App</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#2563eb">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>自分専用PWAアプリ</h1>
-  <p>これはあなた専用のアプリです。</p>
+  <h1>メモ帳</h1>
+  <textarea id="memo" placeholder="ここにメモを書いてください"></textarea>
+  <br>
+  <button id="saveBtn">保存する</button>
+  <p id="status"></p>
+
+  <script>
+    const memo = document.getElementById("memo");
+    const status = document.getElementById("status");
+
+    // 起動時に保存済みメモを読み込む
+    memo.value = localStorage.getItem("myMemo") || "";
+
+    // 保存ボタン
+    document.getElementById("saveBtn").onclick = () => {
+      localStorage.setItem("myMemo", memo.value);
+      status.textContent = "保存しました！";
+      setTimeout(() => status.textContent = "", 2000);
+    };
+
+    // Service Worker 登録
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
 </body>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-  }
-</script>
 </html>
