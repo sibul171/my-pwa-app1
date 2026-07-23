@@ -4,50 +4,96 @@
   <meta charset="UTF-8">
   <title>My Memo App</title>
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#f9a8d4">
   <style>
     body {
-      font-family: sans-serif;
-      margin: 20px;
+      font-family: "Hiragino Sans", sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      background: #fff0f6;
     }
+
+    /* 左側：メモ一覧 */
+    #sidebar {
+      width: 30%;
+      background: #fce7f3;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    #memoList button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #f9a8d4;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #newMemoBtn {
+      width: 100%;
+      padding: 12px;
+      background: #ec4899;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    /* 右側：メモ内容 */
+    #main {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
     textarea {
       width: 100%;
-      height: 300px;
+      height: 70vh;
       font-size: 16px;
       padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #f9a8d4;
+      background: #fff;
     }
-    button {
+
+    #saveBtn {
       padding: 10px 20px;
-      font-size: 16px;
+      background: #ec4899;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
       margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 10px;
+      color: #ec4899;
     }
   </style>
 </head>
 <body>
-  <h1>メモ帳</h1>
-  <textarea id="memo" placeholder="ここにメモを書いてください"></textarea>
-  <br>
-  <button id="saveBtn">保存する</button>
-  <p id="status"></p>
+
+  <!-- 左側：メモ一覧 -->
+  <div id="sidebar">
+    <button id="newMemoBtn">＋ 新しいメモ</button>
+    <div id="memoList"></div>
+  </div>
+
+  <!-- 右側：メモ内容 -->
+  <div id="main">
+    <h2 id="memoTitle">メモを選んでください</h2>
+    <textarea id="memoArea" disabled></textarea>
+    <button id="saveBtn" disabled>保存する</button>
+    <p id="status"></p>
+  </div>
 
   <script>
-    const memo = document.getElementById("memo");
-    const status = document.getElementById("status");
-
-    // 起動時に保存済みメモを読み込む
-    memo.value = localStorage.getItem("myMemo") || "";
-
-    // 保存ボタン
-    document.getElementById("saveBtn").onclick = () => {
-      localStorage.setItem("myMemo", memo.value);
-      status.textContent = "保存しました！";
-      setTimeout(() => status.textContent = "", 2000);
-    };
-
-    // Service Worker 登録
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js');
-    }
-  </script>
-</body>
-</html>
+    let memos = JSON.parse(localStorage.getItem("memoList"))
