@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>My PWA App</title>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#2563eb">
 </head>
 <body>
@@ -12,7 +12,7 @@
 </body>
 <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('./sw.js');
   }
 </script>
 </html>
