@@ -1,5 +1,5 @@
 // Cache name
-const CACHE_NAME = 'pwa-sample-caches-v1';
+const CACHE_NAME = 'pwa-sample-caches-v2';
 // Cache targets
 const urlsToCache = [
   './',
